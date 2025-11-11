@@ -29,6 +29,8 @@ import ThemeScreen from './src/screens/ThemeScreen';
 import NotificationsScreen from './src/screens/NotificationsScreen';
 import PrivacyScreen from './src/screens/PrivacyScreen';
 import HelpScreen from './src/screens/HelpScreen';
+// --- Importa la nueva pantalla ---
+import HelpTopicScreen from './src/screens/HelpTopicScreen'; 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -163,6 +165,10 @@ export default function App() {
                 <Stack.Screen name="Notifications" component={NotificationsScreen} />
                 <Stack.Screen name="Privacy" component={PrivacyScreen} />
                 <Stack.Screen name="Help" component={HelpScreen} />
+                
+                {/* --- Añade la nueva pantalla --- */}
+                <Stack.Screen name="HelpTopic" component={HelpTopicScreen} />
+                
               </Stack.Navigator>
             </NavigationContainer>
           </PrivacyProvider>

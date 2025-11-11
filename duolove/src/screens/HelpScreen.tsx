@@ -11,9 +11,11 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
-import { christmasTheme } from '../theme';
+import { useTheme } from '../context/ThemeContext'; // <-- USAR HOOK
 
 export default function HelpScreen({ navigation }: any) {
+  const { theme, gradientColors } = useTheme(); // <-- Usar tema
+
   const faqItems = [
     {
       question: '¿Cómo crear una sala?',
@@ -37,34 +39,35 @@ export default function HelpScreen({ navigation }: any) {
     },
   ];
 
+  // Descripciones completas para la nueva pantalla
   const helpTopics = [
     {
       id: 'getting-started',
       icon: 'rocket',
       iconBg: '#3B82F6',
       title: 'Primeros Pasos',
-      description: 'Aprende lo básico de DuoLove',
+      description: 'Aprende lo básico de DuoLove: cómo registrarte, iniciar sesión y configurar tu perfil.',
     },
     {
       id: 'rooms',
       icon: 'home',
       iconBg: '#8B5CF6',
       title: 'Gestión de Salas',
-      description: 'Crear, unirse y administrar salas',
+      description: 'Descubre cómo crear una sala, unirte a una existente usando un código o QR, e invitar a tu pareja.',
     },
     {
       id: 'whiteboard',
       icon: 'brush',
       iconBg: '#EC4899',
       title: 'Pizarra Interactiva',
-      description: 'Cómo usar las herramientas de dibujo',
+      description: 'Domina la pizarra: cambia colores, grosores, añade fotos de fondo, borra y deshace trazos.',
     },
     {
       id: 'profile',
       icon: 'person',
       iconBg: '#10B981',
       title: 'Perfil y Cuenta',
-      description: 'Personalizar tu perfil',
+      description: 'Personaliza tu perfil, cambia tu foto, y aprende a gestionar la configuración de tu cuenta.',
     },
   ];
 
@@ -94,9 +97,18 @@ export default function HelpScreen({ navigation }: any) {
       });
   };
 
+  // --- FUNCIÓN MODIFICADA ---
+  const handleTopicPress = (topic: typeof helpTopics[0]) => {
+    // Navega a la nueva pantalla en lugar de mostrar alerta
+    navigation.navigate('HelpTopic', {
+      title: topic.title,
+      content: topic.description,
+    });
+  };
+
   return (
     <LinearGradient
-      colors={[christmasTheme.colors.gradientStart, christmasTheme.colors.gradientEnd]}
+      colors={gradientColors} // <-- USAR GRADIENTE DE TEMA
       style={styles.container}
     >
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -106,34 +118,34 @@ export default function HelpScreen({ navigation }: any) {
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <Ionicons name="arrow-back" size={24} color={christmasTheme.colors.text} />
+            <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
             <Svg width={28} height={28} viewBox="0 0 100 100">
               {/* Question mark icon */}
-              <Circle cx="50" cy="50" r="45" fill={christmasTheme.colors.text} />
+              <Circle cx="50" cy="50" r="45" fill={theme.colors.text} />
               <Path
                 d="M50 60 L50 65"
-                stroke={christmasTheme.colors.primary}
+                stroke={theme.colors.gradientEnd} // <-- USAR TEMA
                 strokeWidth="8"
                 strokeLinecap="round"
               />
-              <Circle cx="50" cy="75" r="4" fill={christmasTheme.colors.primary} />
+              <Circle cx="50" cy="75" r="4" fill={theme.colors.gradientEnd} />
               <Path
                 d="M35 35 Q35 20 50 20 Q65 20 65 35 Q65 45 50 50"
-                stroke={christmasTheme.colors.primary}
+                stroke={theme.colors.gradientEnd} // <-- USAR TEMA
                 strokeWidth="8"
                 fill="none"
                 strokeLinecap="round"
               />
             </Svg>
-            <Text style={styles.headerTitle}>Ayuda</Text>
+            <Text style={[styles.headerTitle, { color: theme.colors.text }]}>Ayuda</Text>
           </View>
         </View>
 
-        <View style={styles.content}>
+        <View style={[styles.content, { backgroundColor: theme.colors.backgroundLight }]}>
           {/* Welcome Card */}
-          <View style={styles.welcomeCard}>
+          <View style={[styles.welcomeCard, { backgroundColor: theme.colors.card, ...theme.shadows.medium }]}>
             <Svg width={60} height={60} viewBox="0 0 100 100">
               <Path
                 d="M50 10 L70 35 L65 35 L80 55 L75 55 L90 75 L10 75 L25 55 L20 55 L35 35 L30 35 Z"
@@ -144,50 +156,57 @@ export default function HelpScreen({ navigation }: any) {
               <Circle cx="40" cy="40" r="3" fill="#C41E3A" />
               <Circle cx="60" cy="45" r="3" fill="#FFD700" />
             </Svg>
-            <Text style={styles.welcomeTitle}>¿Cómo podemos ayudarte?</Text>
-            <Text style={styles.welcomeText}>
+            <Text style={[styles.welcomeTitle, { color: theme.colors.textDark }]}>¿Cómo podemos ayudarte?</Text>
+            <Text style={[styles.welcomeText, { color: theme.colors.textMuted }]}>
               Encuentra respuestas a tus preguntas o contáctanos directamente
             </Text>
           </View>
 
           {/* Help Topics */}
-          <Text style={styles.sectionTitle}>Temas de Ayuda</Text>
+          <Text style={[styles.sectionTitle, { color: theme.colors.textDark }]}>Temas de Ayuda</Text>
           {helpTopics.map((topic) => (
-            <TouchableOpacity key={topic.id} style={styles.topicCard}>
+            <TouchableOpacity 
+              key={topic.id} 
+              style={[styles.topicCard, { backgroundColor: theme.colors.card, ...theme.shadows.small }]}
+              onPress={() => handleTopicPress(topic)} // <-- USA LA NUEVA FUNCIÓN
+            >
               <View style={[styles.topicIcon, { backgroundColor: topic.iconBg + '20' }]}>
                 <Ionicons name={topic.icon as any} size={24} color={topic.iconBg} />
               </View>
               <View style={styles.topicInfo}>
-                <Text style={styles.topicTitle}>{topic.title}</Text>
-                <Text style={styles.topicDescription}>{topic.description}</Text>
+                <Text style={[styles.topicTitle, { color: theme.colors.textDark }]}>{topic.title}</Text>
+                {/* Cortamos la descripción aquí ya que se verá en otra pantalla */}
+                <Text style={[styles.topicDescription, { color: theme.colors.textMuted }]}>
+                  {topic.description.substring(0, 40)}...
+                </Text>
               </View>
-              <Ionicons name="chevron-forward" size={20} color={christmasTheme.colors.textMuted} />
+              <Ionicons name="chevron-forward" size={20} color={theme.colors.textMuted} />
             </TouchableOpacity>
           ))}
 
-          {/* FAQ Section */}
-          <Text style={[styles.sectionTitle, { marginTop: 30 }]}>Preguntas Frecuentes</Text>
+          {/* --- SECCIÓN DE FAQ (LA QUE FALTABA) --- */}
+          <Text style={[styles.sectionTitle, { marginTop: 30, color: theme.colors.textDark }]}>Preguntas Frecuentes</Text>
           {faqItems.map((item, index) => (
-            <View key={index} style={styles.faqCard}>
+            <View key={index} style={[styles.faqCard, { backgroundColor: theme.colors.card, ...theme.shadows.small }]}>
               <View style={styles.faqHeader}>
-                <Ionicons name="help-circle" size={20} color={christmasTheme.colors.primary} />
-                <Text style={styles.faqQuestion}>{item.question}</Text>
+                <Ionicons name="help-circle" size={20} color={theme.colors.primary} />
+                <Text style={[styles.faqQuestion, { color: theme.colors.textDark }]}>{item.question}</Text>
               </View>
-              <Text style={styles.faqAnswer}>{item.answer}</Text>
+              <Text style={[styles.faqAnswer, { color: theme.colors.textMuted }]}>{item.answer}</Text>
             </View>
           ))}
 
           {/* Contact Support */}
-          <View style={styles.contactSection}>
-            <Text style={styles.contactTitle}>¿Aún necesitas ayuda?</Text>
-            <Text style={styles.contactText}>Nuestro equipo está listo para asistirte</Text>
+          <View style={[styles.contactSection, { backgroundColor: theme.colors.primary + '10' }]}>
+            <Text style={[styles.contactTitle, { color: theme.colors.textDark }]}>¿Aún necesitas ayuda?</Text>
+            <Text style={[styles.contactText, { color: theme.colors.textMuted }]}>Nuestro equipo está listo para asistirte</Text>
 
             <TouchableOpacity
-              style={styles.contactButton}
+              style={[styles.contactButton, { ...theme.shadows.medium }]}
               onPress={handleContactSupport}
             >
               <LinearGradient
-                colors={[christmasTheme.colors.primary, christmasTheme.colors.secondary]}
+                colors={[theme.colors.primary, theme.colors.secondary]}
                 style={styles.contactGradient}
               >
                 <Ionicons name="mail" size={20} color="#FFF" />
@@ -196,30 +215,30 @@ export default function HelpScreen({ navigation }: any) {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.faqButton} onPress={handleOpenFAQ}>
-              <Ionicons name="book" size={18} color={christmasTheme.colors.primary} />
-              <Text style={styles.faqButtonText}>Ver FAQ Completo</Text>
+              <Ionicons name="book" size={18} color={theme.colors.primary} />
+              <Text style={[styles.faqButtonText, { color: theme.colors.primary }]}>Ver FAQ Completo</Text>
             </TouchableOpacity>
           </View>
 
           {/* Footer Info */}
-          <View style={styles.footerInfo}>
+          <View style={[styles.footerInfo, { borderTopColor: theme.colors.textMuted + '30' }]}>
             <View style={styles.footerRow}>
               <Svg width={18} height={18} viewBox="0 0 100 100">
                 <Rect x="10" y="25" width="80" height="55" rx="8" fill="#6366F1" />
                 <Path d="M10 30 L50 60 L90 30" stroke="#fff" strokeWidth="6" fill="none" />
               </Svg>
-              <Text style={styles.footerText}>soporte@duolove.com</Text>
+              <Text style={[styles.footerText, { color: theme.colors.textMuted }]}>soporte@duolove.com</Text>
             </View>
             <View style={styles.footerRow}>
               <Svg width={18} height={18} viewBox="0 0 100 100">
                 <Circle cx="50" cy="50" r="45" fill="#0EA5E9" />
                 <Path d="M30 50 L50 30 L50 55 L65 55" stroke="#fff" strokeWidth="6" fill="none" strokeLinecap="round" />
               </Svg>
-              <Text style={styles.footerText}>www.duolove.com</Text>
+              <Text style={[styles.footerText, { color: theme.colors.textMuted }]}>www.duolove.com</Text>
             </View>
             <View style={styles.footerRow}>
-              <Ionicons name="time" size={18} color={christmasTheme.colors.textMuted} />
-              <Text style={styles.footerText}>Horario: Lun-Vie 9AM-6PM</Text>
+              <Ionicons name="time" size={18} color={theme.colors.textMuted} />
+              <Text style={[styles.footerText, { color: theme.colors.textMuted }]}>Horario: Lun-Vie 9AM-6PM</Text>
             </View>
           </View>
         </View>
@@ -228,76 +247,68 @@ export default function HelpScreen({ navigation }: any) {
   );
 }
 
+// Estilos (sin 'christmasTheme')
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   scrollContent: {
     flexGrow: 1,
-    paddingTop: christmasTheme.spacing.xl + 20,
+    paddingTop: 52, // 32 + 20
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: christmasTheme.spacing.lg,
-    paddingBottom: christmasTheme.spacing.lg,
+    paddingHorizontal: 24,
+    paddingBottom: 24,
   },
   backButton: {
-    padding: christmasTheme.spacing.sm,
-    marginRight: christmasTheme.spacing.sm,
+    padding: 8,
+    marginRight: 8,
   },
   headerTitleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: christmasTheme.spacing.sm,
+    gap: 8,
   },
   headerTitle: {
-    fontSize: christmasTheme.fontSizes.xxlarge,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: christmasTheme.colors.text,
   },
   content: {
     flex: 1,
-    backgroundColor: christmasTheme.colors.backgroundLight,
-    borderTopLeftRadius: christmasTheme.borderRadius.xlarge,
-    borderTopRightRadius: christmasTheme.borderRadius.xlarge,
-    padding: christmasTheme.spacing.lg,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 24,
   },
   welcomeCard: {
-    backgroundColor: christmasTheme.colors.card,
-    borderRadius: christmasTheme.borderRadius.large,
+    borderRadius: 16,
     padding: 24,
     alignItems: 'center',
     marginBottom: 24,
-    ...christmasTheme.shadows.medium,
   },
   welcomeTitle: {
-    fontSize: christmasTheme.fontSizes.xlarge,
+    fontSize: 20,
     fontWeight: '700',
-    color: christmasTheme.colors.textDark,
     marginBottom: 8,
     marginTop: 12,
   },
   welcomeText: {
-    fontSize: christmasTheme.fontSizes.small,
-    color: christmasTheme.colors.textMuted,
+    fontSize: 12,
     textAlign: 'center',
     lineHeight: 20,
   },
   sectionTitle: {
-    fontSize: christmasTheme.fontSizes.large,
+    fontSize: 20,
     fontWeight: '700',
-    color: christmasTheme.colors.textDark,
-    marginBottom: christmasTheme.spacing.md,
+    marginBottom: 16,
   },
   topicCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: christmasTheme.colors.card,
-    borderRadius: christmasTheme.borderRadius.medium,
-    padding: christmasTheme.spacing.md,
-    marginBottom: christmasTheme.spacing.sm,
-    ...christmasTheme.shadows.small,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 8,
   },
   topicIcon: {
     width: 50,
@@ -305,27 +316,23 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: christmasTheme.spacing.md,
+    marginRight: 16,
   },
   topicInfo: {
     flex: 1,
   },
   topicTitle: {
-    fontSize: christmasTheme.fontSizes.medium,
+    fontSize: 16,
     fontWeight: '600',
-    color: christmasTheme.colors.textDark,
     marginBottom: 2,
   },
   topicDescription: {
-    fontSize: christmasTheme.fontSizes.small,
-    color: christmasTheme.colors.textMuted,
+    fontSize: 12,
   },
   faqCard: {
-    backgroundColor: christmasTheme.colors.card,
-    borderRadius: christmasTheme.borderRadius.medium,
-    padding: christmasTheme.spacing.md,
-    marginBottom: christmasTheme.spacing.sm,
-    ...christmasTheme.shadows.small,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 8,
   },
   faqHeader: {
     flexDirection: 'row',
@@ -335,50 +342,44 @@ const styles = StyleSheet.create({
   },
   faqQuestion: {
     flex: 1,
-    fontSize: christmasTheme.fontSizes.medium,
+    fontSize: 16,
     fontWeight: '600',
-    color: christmasTheme.colors.textDark,
   },
   faqAnswer: {
-    fontSize: christmasTheme.fontSizes.small,
-    color: christmasTheme.colors.textMuted,
+    fontSize: 12,
     lineHeight: 20,
     paddingLeft: 28,
   },
   contactSection: {
-    backgroundColor: christmasTheme.colors.primary + '10',
-    borderRadius: christmasTheme.borderRadius.large,
+    borderRadius: 16,
     padding: 20,
     marginTop: 30,
     alignItems: 'center',
   },
   contactTitle: {
-    fontSize: christmasTheme.fontSizes.large,
+    fontSize: 20,
     fontWeight: '700',
-    color: christmasTheme.colors.textDark,
     marginBottom: 8,
   },
   contactText: {
-    fontSize: christmasTheme.fontSizes.small,
-    color: christmasTheme.colors.textMuted,
+    fontSize: 12,
     marginBottom: 20,
   },
   contactButton: {
     width: '100%',
-    borderRadius: christmasTheme.borderRadius.medium,
+    borderRadius: 12,
     overflow: 'hidden',
-    marginBottom: christmasTheme.spacing.sm,
-    ...christmasTheme.shadows.medium,
+    marginBottom: 8,
   },
   contactGradient: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: christmasTheme.spacing.md,
+    paddingVertical: 16,
     gap: 8,
   },
   contactButtonText: {
-    fontSize: christmasTheme.fontSizes.medium,
+    fontSize: 16,
     fontWeight: '700',
     color: '#FFFFFF',
   },
@@ -387,19 +388,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 6,
-    paddingVertical: christmasTheme.spacing.sm,
+    paddingVertical: 8,
   },
   faqButtonText: {
-    fontSize: christmasTheme.fontSizes.small,
+    fontSize: 12,
     fontWeight: '600',
-    color: christmasTheme.colors.primary,
   },
   footerInfo: {
     alignItems: 'center',
     marginTop: 24,
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: christmasTheme.colors.textMuted + '30',
   },
   footerRow: {
     flexDirection: 'row',
@@ -408,7 +407,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   footerText: {
-    fontSize: christmasTheme.fontSizes.small,
-    color: christmasTheme.colors.textMuted,
+    fontSize: 12,
   },
 });

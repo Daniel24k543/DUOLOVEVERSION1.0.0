@@ -1,22 +1,26 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// Importa los nuevos temas y la función
+import { themes, getTheme, ChristmasTheme } from '../theme'; 
 
 type ThemeType = 'christmas' | 'winter' | 'romantic' | 'gold';
 
 interface ThemeSettings {
   selectedTheme: ThemeType;
-  darkMode: boolean;
+  darkMode: boolean; // Dejamos esto para personalización futura
   animations: boolean;
   snowEffect: boolean;
 }
 
 interface ThemeContextType {
   settings: ThemeSettings;
+  theme: ChristmasTheme; // Proporciona el objeto de tema completo
+  gradientColors: string[]; // Proporciona los colores del gradiente
   updateTheme: (theme: ThemeType) => Promise<void>;
   toggleDarkMode: (value: boolean) => Promise<void>;
   toggleAnimations: (value: boolean) => Promise<void>;
   toggleSnowEffect: (value: boolean) => Promise<void>;
-  getThemeColors: () => { gradientStart: string; gradientEnd: string };
+  // getThemeColors ya no es necesario, lo manejamos con 'theme' y 'gradientColors'
 }
 
 const defaultSettings: ThemeSettings = {
@@ -30,11 +34,28 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [settings, setSettings] = useState<ThemeSettings>(defaultSettings);
+  
+  // Añade estados para el tema y gradiente
+  const [theme, setTheme] = useState<ChristmasTheme>(themes.christmas);
+  const [gradientColors, setGradientColors] = useState([
+    themes.christmas.colors.gradientStart,
+    themes.christmas.colors.gradientEnd,
+  ]);
 
   // Cargar configuración guardada
   useEffect(() => {
     loadSettings();
   }, []);
+
+  // Actualizar el tema cuando cambien los settings
+  useEffect(() => {
+    const newTheme = getTheme(settings.selectedTheme);
+    setTheme(newTheme);
+    setGradientColors([
+      newTheme.colors.gradientStart,
+      newTheme.colors.gradientEnd,
+    ]);
+  }, [settings.selectedTheme]);
 
   const loadSettings = async () => {
     try {
@@ -58,47 +79,36 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   const updateTheme = async (theme: ThemeType) => {
     const newSettings = { ...settings, selectedTheme: theme };
-    setSettings(newSettings);
     await saveSettings(newSettings);
   };
 
   const toggleDarkMode = async (value: boolean) => {
     const newSettings = { ...settings, darkMode: value };
-    setSettings(newSettings);
     await saveSettings(newSettings);
   };
 
   const toggleAnimations = async (value: boolean) => {
     const newSettings = { ...settings, animations: value };
-    setSettings(newSettings);
     await saveSettings(newSettings);
   };
 
   const toggleSnowEffect = async (value: boolean) => {
     const newSettings = { ...settings, snowEffect: value };
-    setSettings(newSettings);
     await saveSettings(newSettings);
   };
 
-  const getThemeColors = () => {
-    const themes = {
-      christmas: { gradientStart: '#2D1B69', gradientEnd: '#C41E3A' },
-      winter: { gradientStart: '#1E3A8A', gradientEnd: '#60A5FA' },
-      romantic: { gradientStart: '#BE185D', gradientEnd: '#EC4899' },
-      gold: { gradientStart: '#854D0E', gradientEnd: '#FBBF24' },
-    };
-    return themes[settings.selectedTheme];
-  };
+  // getThemeColors ya no es necesario
 
   return (
     <ThemeContext.Provider
       value={{
         settings,
+        theme, // Pasa el objeto de tema
+        gradientColors, // Pasa los colores del gradiente
         updateTheme,
         toggleDarkMode,
         toggleAnimations,
         toggleSnowEffect,
-        getThemeColors,
       }}
     >
       {children}

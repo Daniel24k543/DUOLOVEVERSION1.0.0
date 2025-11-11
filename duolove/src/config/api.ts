@@ -2,7 +2,7 @@
 // IMPORTANTE: Si usas Android Emulator, usa 10.0.2.2
 // Si usas dispositivo físico, cambia a la IP de tu computadora (ej: 192.168.1.42)
 
-export const API_URL = 'http://192.168.1.3:4000'; // Dispositivo físico - IP de tu PC
+export const API_URL = 'http://192.168.1.8:4000'; // Dispositivo físico - IP de tu PC
 // export const API_URL = 'http://10.0.2.2:4000'; // Android Emulator
 // export const API_URL = 'http://localhost:4000'; // Web
 

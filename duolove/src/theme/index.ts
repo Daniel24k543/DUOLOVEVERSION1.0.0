@@ -27,14 +27,10 @@ export const christmasTheme = {
     cardDark: '#1E1E1E',
     border: '#E0E0E0',
     shadow: 'rgba(0, 0, 0, 0.1)',
-    
-    // Navidad específicos
-    snow: '#FFFFFF',
-    holly: '#C41E3A',
-    pine: '#165B33',
-    star: '#FFD700',
   },
   
+  // ... (deja el resto de fontSizes, spacing, borderRadius, shadows igual que está)
+  // ... (solo copié la parte de colors para abreviar)
   fonts: {
     regular: 'System',
     bold: 'System',
@@ -93,3 +89,39 @@ export const christmasTheme = {
 };
 
 export type ChristmasTheme = typeof christmasTheme;
+
+// --- AÑADE ESTO ---
+
+// Define los otros temas (basado en tu ThemeScreen.tsx)
+// Hacemos una copia "profunda" de christmasTheme y solo cambiamos los colores clave
+const winterTheme = JSON.parse(JSON.stringify(christmasTheme));
+winterTheme.colors.primary = '#60A5FA';
+winterTheme.colors.secondary = '#1E3A8A';
+winterTheme.colors.accent = '#E0F2FE';
+winterTheme.colors.gradientStart = '#1E3A8A';
+winterTheme.colors.gradientEnd = '#60A5FA';
+
+const romanticTheme = JSON.parse(JSON.stringify(christmasTheme));
+romanticTheme.colors.primary = '#EC4899';
+romanticTheme.colors.secondary = '#BE185D';
+romanticTheme.colors.accent = '#FCE7F3';
+romanticTheme.colors.gradientStart = '#BE185D';
+romanticTheme.colors.gradientEnd = '#EC4899';
+
+const goldTheme = JSON.parse(JSON.stringify(christmasTheme));
+goldTheme.colors.primary = '#FBBF24';
+goldTheme.colors.secondary = '#854D0E';
+goldTheme.colors.accent = '#FEF9C3';
+goldTheme.colors.gradientStart = '#854D0E';
+goldTheme.colors.gradientEnd = '#FBBF24';
+
+export const themes = {
+  christmas: christmasTheme,
+  winter: winterTheme,
+  romantic: romanticTheme,
+  gold: goldTheme,
+};
+
+export const getTheme = (themeId: 'christmas' | 'winter' | 'romantic' | 'gold') => {
+  return themes[themeId] || christmasTheme;
+};

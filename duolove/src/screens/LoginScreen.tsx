@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // <--- ARREGLADO: Añadido useState
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView, // <--- ARREGLADO: Añadido KeyboardAvoidingView
   Platform,
   ScrollView,
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import Svg, { Path, Circle, Polygon } from 'react-native-svg';
 import ApiService from '../services/api';
-import { christmasTheme } from '../theme';
+import { useTheme } from '../context/ThemeContext'; // <--- MEJORA: Hook de Tema
+import AppBackground from '../components/AppBackground'; // <--- MEJORA: Fondo de Video
 
 export default function LoginScreen({ navigation }: any) {
+  const { theme } = useTheme(); // <--- MEJORA: Usar el tema del contexto
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // <--- Esta línea ahora funciona
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
@@ -42,10 +44,10 @@ export default function LoginScreen({ navigation }: any) {
   };
 
   return (
-    <LinearGradient
-      colors={[christmasTheme.colors.gradientStart, christmasTheme.colors.gradientEnd]}
-      style={styles.container}
-    >
+    <View style={styles.container}>
+      {/* MEJORA: Fondo de video/gradiente */}
+      <AppBackground />
+
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
@@ -73,18 +75,19 @@ export default function LoginScreen({ navigation }: any) {
                 <Circle cx="60" cy="60" r="2" fill="#FFD700" />
               </Svg>
             </View>
-            <Text style={styles.title}>DuoLove</Text>
-            <Text style={styles.subtitle}>Aplicación imprescindible para parejas</Text>
+            {/* MEJORA: Estilos de tema aplicados */}
+            <Text style={[styles.title, { color: theme.colors.text }]}>DuoLove</Text>
+            <Text style={[styles.subtitle, { color: theme.colors.accent }]}>Aplicación imprescindible para parejas</Text>
           </View>
 
           {/* Formulario */}
-          <View style={styles.formCard}>
-            <View style={styles.inputContainer}>
-              <Ionicons name="mail-outline" size={20} color={christmasTheme.colors.textMuted} />
+          <View style={[styles.formCard, { backgroundColor: theme.colors.card, ...theme.shadows.medium }]}>
+            <View style={[styles.inputContainer, { borderColor: theme.colors.border, backgroundColor: theme.colors.backgroundLight }]}>
+              <Ionicons name="mail-outline" size={20} color={theme.colors.textMuted} />
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: theme.colors.textDark }]}
                 placeholder="Email"
-                placeholderTextColor={christmasTheme.colors.textMuted}
+                placeholderTextColor={theme.colors.textMuted}
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -93,12 +96,12 @@ export default function LoginScreen({ navigation }: any) {
               />
             </View>
 
-            <View style={styles.inputContainer}>
-              <Ionicons name="lock-closed-outline" size={20} color={christmasTheme.colors.textMuted} />
+            <View style={[styles.inputContainer, { borderColor: theme.colors.border, backgroundColor: theme.colors.backgroundLight }]}>
+              <Ionicons name="lock-closed-outline" size={20} color={theme.colors.textMuted} />
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: theme.colors.textDark }]}
                 placeholder="Contraseña"
-                placeholderTextColor={christmasTheme.colors.textMuted}
+                placeholderTextColor={theme.colors.textMuted}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={!showPassword}
@@ -108,20 +111,20 @@ export default function LoginScreen({ navigation }: any) {
                 <Ionicons
                   name={showPassword ? 'eye-outline' : 'eye-off-outline'}
                   size={20}
-                  color={christmasTheme.colors.textMuted}
+                  color={theme.colors.textMuted}
                 />
               </TouchableOpacity>
             </View>
 
             <TouchableOpacity
-              style={[styles.loginButton, loading && styles.loginButtonDisabled]}
+              style={[styles.loginButton, { backgroundColor: theme.colors.primary, ...theme.shadows.small }, loading && styles.loginButtonDisabled]}
               onPress={handleLogin}
               disabled={loading}
             >
               {loading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
-                <Text style={styles.loginButtonText}>Acceder</Text>
+                <Text style={[styles.loginButtonText, { color: theme.colors.text }]}>Acceder</Text>
               )}
             </TouchableOpacity>
 
@@ -130,11 +133,8 @@ export default function LoginScreen({ navigation }: any) {
               onPress={() => navigation.navigate('Register')}
               disabled={loading}
             >
-              <Text style={styles.registerLinkText}>
-                ¿Ya tienes una cuenta? <Text style={styles.registerLinkBold}>Acceso</Text>
-              </Text>
-              <Text style={styles.registerLinkText}>
-                ¿No tienes cuenta? <Text style={styles.registerLinkBold}>Regístrate</Text>
+              <Text style={[styles.registerLinkText, { color: theme.colors.textMuted }]}>
+                ¿No tienes cuenta? <Text style={[styles.registerLinkBold, { color: theme.colors.primary }]}>Regístrate</Text>
               </Text>
             </TouchableOpacity>
           </View>
@@ -175,7 +175,7 @@ export default function LoginScreen({ navigation }: any) {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </LinearGradient>
+    </View>
   );
 }
 
@@ -189,93 +189,73 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: christmasTheme.spacing.lg,
+    padding: 24,
   },
   header: {
     alignItems: 'center',
-    marginBottom: christmasTheme.spacing.xl,
+    marginBottom: 32,
   },
   iconContainer: {
-    marginBottom: christmasTheme.spacing.md,
-  },
-  emoji: {
-    fontSize: 60,
-    marginBottom: christmasTheme.spacing.sm,
+    marginBottom: 16,
   },
   title: {
-    fontSize: christmasTheme.fontSizes.title,
+    fontSize: 36,
     fontWeight: 'bold',
-    color: christmasTheme.colors.text,
-    marginBottom: christmasTheme.spacing.xs,
+    marginBottom: 4,
   },
   subtitle: {
-    fontSize: christmasTheme.fontSizes.medium,
-    color: christmasTheme.colors.accent,
+    fontSize: 16,
     textAlign: 'center',
   },
   formCard: {
-    backgroundColor: christmasTheme.colors.card,
-    borderRadius: christmasTheme.borderRadius.large,
-    padding: christmasTheme.spacing.lg,
-    ...christmasTheme.shadows.medium,
+    borderRadius: 16,
+    padding: 24,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: christmasTheme.colors.border,
-    borderRadius: christmasTheme.borderRadius.medium,
-    paddingHorizontal: christmasTheme.spacing.md,
-    marginBottom: christmasTheme.spacing.md,
-    backgroundColor: christmasTheme.colors.backgroundLight,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    marginBottom: 16,
   },
   input: {
     flex: 1,
-    paddingVertical: christmasTheme.spacing.md,
-    paddingHorizontal: christmasTheme.spacing.sm,
-    fontSize: christmasTheme.fontSizes.medium,
-    color: christmasTheme.colors.textDark,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+    fontSize: 16,
   },
   loginButton: {
-    backgroundColor: christmasTheme.colors.primary,
-    borderRadius: christmasTheme.borderRadius.medium,
-    paddingVertical: christmasTheme.spacing.md,
+    borderRadius: 12,
+    paddingVertical: 16,
     alignItems: 'center',
-    marginTop: christmasTheme.spacing.sm,
-    ...christmasTheme.shadows.small,
+    marginTop: 8,
   },
   loginButtonDisabled: {
     opacity: 0.6,
   },
   loginButtonText: {
-    color: christmasTheme.colors.text,
-    fontSize: christmasTheme.fontSizes.large,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   registerLink: {
-    marginTop: christmasTheme.spacing.lg,
+    marginTop: 24,
     alignItems: 'center',
   },
   registerLinkText: {
-    color: christmasTheme.colors.textMuted,
-    fontSize: christmasTheme.fontSizes.medium,
-    marginBottom: christmasTheme.spacing.xs,
+    fontSize: 16,
+    marginBottom: 4,
   },
   registerLinkBold: {
-    color: christmasTheme.colors.primary,
     fontWeight: 'bold',
   },
   footer: {
-    marginTop: christmasTheme.spacing.xl,
+    marginTop: 32,
     alignItems: 'center',
   },
   footerIcons: {
     flexDirection: 'row',
-    gap: christmasTheme.spacing.md,
+    gap: 16,
     justifyContent: 'center',
-  },
-  footerEmoji: {
-    fontSize: 24,
-    letterSpacing: 8,
   },
 });

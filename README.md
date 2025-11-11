@@ -1,50 +1,106 @@
-# Welcome to your Expo app 👋
+# 🎄 DuoLove - Aplicación Navideña para Parejas
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Una aplicación imprescindible para parejas con tema navideño, pizarra compartida y salas privadas.
 
-## Get started
+## 🚀 Inicio Rápido
 
-1. Install dependencies
+### Pre-requisitos
+- Node.js 16+ ([Descargar aquí](https://nodejs.org/))
+- Git (opcional)
+- Para Android: Android Studio + Emulador o Expo Go en tu teléfono
 
-   ```bash
-   npm install
-   ```
+### 📦 Instalación
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+#### 1. Backend (Node + Express + SQLite)
+```powershell
+cd backend
+npm install
+npm run dev
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+El backend estará corriendo en `http://localhost:4000`
 
-## Learn more
+#### 2. Frontend (Expo - React Native)
+```powershell
+cd duolove
+npm install
+npm start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+- Para **Android Emulator**: Presiona `a` en la terminal
+- Para **Dispositivo físico**: Escanea el QR con Expo Go
+- Para **Web**: Presiona `w` en la terminal
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🎨 Características
 
-## Join the community
+- ✨ Splash navideño animado (4-6 segundos)
+- 🔐 Login/Registro con backend local (sin Google Cloud)
+- 👤 Perfil editable con foto
+- 🏠 Pantalla principal con navegación inferior
+- 🎨 Pizarra compartida para dibujar juntos
+- 🔑 Salas privadas con código único
+- 📱 QR opcional para unirse rápidamente
+- ⚙️ Ajustes personalizables
+- 🎄 Tema navideño completo
 
-Join our community of developers creating universal apps.
+## 🛠️ Tecnologías
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Frontend**: Expo (React Native) + TypeScript
+- **Backend**: Node.js + Express + SQLite
+- **Autenticación**: JWT
+- **Storage**: AsyncStorage (móvil), SQLite (servidor)
+
+## 📱 Pantallas
+
+1. **Splash** - Pantalla de bienvenida navideña
+2. **Login/Registro** - Autenticación sin términos y condiciones
+3. **Home** - Pantalla principal con opciones de sala
+4. **Pizarra** - Área de dibujo compartida
+5. **Perfil** - Editar nombre, foto y preferencias
+6. **Ajustes** - Configuración de la app
+
+## 🔧 Configuración
+
+### Backend (.env)
+Crea un archivo `backend/.env`:
+```
+JWT_SECRET=tu_clave_secreta_cambiala_por_una_real
+PORT=4000
+```
+
+### Frontend (IP del servidor)
+Si usas un dispositivo físico, cambia la IP en `duolove/src/config/api.ts` a la IP de tu computadora:
+```typescript
+export const API_URL = 'http://TU_IP_LOCAL:4000';
+```
+
+## 📝 Estructura del Proyecto
+
+```
+DuoLove/
+├── backend/              # Servidor Node + Express
+│   ├── server.js        # Punto de entrada
+│   ├── duolove.db       # Base de datos SQLite (auto-generada)
+│   └── package.json
+├── duolove/             # App móvil Expo
+│   ├── App.tsx          # Componente principal
+│   ├── src/
+│   │   ├── screens/     # Pantallas
+│   │   ├── components/  # Componentes reutilizables
+│   │   ├── config/      # Configuración
+│   │   └── theme/       # Tema navideño
+│   └── assets/          # Imágenes y recursos
+└── README.md
+```
+
+## 🎯 Próximos Pasos
+
+- [ ] WebSockets para pizarra en tiempo real
+- [ ] Notificaciones push
+- [ ] Chat de texto
+- [ ] Galería de dibujos guardados
+- [ ] Personalización de temas
+
+## 📄 Licencia
+
+Proyecto personal - DuoLove © 2025

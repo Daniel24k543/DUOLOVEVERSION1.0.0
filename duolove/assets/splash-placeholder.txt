@@ -1,0 +1,6 @@
+# Este archivo es un placeholder temporal para splash.png
+# Reemplázalo con una imagen real de 1284x2778 px con diseño navideño
+# Fondo sugerido: púrpura oscuro (#2D1B69)
+# Contenido: Logo "DuoLove" con elementos navideños (árbol, copos de nieve, etc.)
+
+PLACEHOLDER - Crea una imagen PNG de 1284x2778 px aquí

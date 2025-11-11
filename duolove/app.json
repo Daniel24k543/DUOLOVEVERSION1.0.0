@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "DuoLove",
+    "slug": "duolove",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#2D1B69"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.duolove.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#2D1B69"
+      },
+      "package": "com.duolove.app"
+    },
+    "web": {},
+    "scheme": "duolove",
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ]
+  }
+}

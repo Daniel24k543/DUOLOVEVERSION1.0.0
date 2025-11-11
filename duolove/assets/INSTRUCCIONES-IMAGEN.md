@@ -18,6 +18,7 @@ Si no tienes la imagen, puedes:
 ## Verificar
 
 Después de agregar la imagen, ejecuta:
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\duolove
 Test-Path assets\splash-duolove.jpg

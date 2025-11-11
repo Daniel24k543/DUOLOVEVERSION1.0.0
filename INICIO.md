@@ -14,6 +14,7 @@ cd C:\Users\magis\Documents\DuoLove
 O instala manualmente:
 
 **Backend:**
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\backend
 Copy-Item .env.example .env
@@ -21,6 +22,7 @@ npm install
 ```
 
 **Frontend:**
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\duolove
 npm install
@@ -29,12 +31,14 @@ npm install
 ### 2️⃣ Ejecutar la app
 
 **Terminal 1 - Backend:**
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\backend
 npm run dev
 ```
 
 **Terminal 2 - Frontend:**
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\duolove
 npm start
@@ -70,17 +74,20 @@ Si ves errores sobre imágenes faltantes:
 ## 🐛 Problemas Comunes
 
 ### Backend no conecta
+
 - Verifica que esté corriendo: http://localhost:4000
 - Si usas Android Emulator: `http://10.0.2.2:4000`
 - Si usas teléfono: Cambia IP en `duolove/src/config/api.ts`
 
 ### Puerto 4000 ocupado
+
 ```powershell
 netstat -ano | findstr :4000
 taskkill /PID <PID> /F
 ```
 
 ### Módulos no encontrados
+
 ```powershell
 cd duolove
 Remove-Item -Recurse node_modules
@@ -100,7 +107,7 @@ npm install
 ✅ Pizarra dibujable (colores + grosor)  
 ✅ Perfil editable con foto  
 ✅ Ajustes navideños  
-✅ Navegación con tabs (Home + Perfil)  
+✅ Navegación con tabs (Home + Perfil)
 
 ---
 

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import ApiService from '../services/api';
 import { christmasTheme } from '../theme';
 
@@ -46,7 +47,7 @@ export default function SettingsScreen({ navigation }: any) {
       title: 'Tema navideño',
       subtitle: 'Personaliza la apariencia',
       color: christmasTheme.colors.primary,
-      onPress: () => Alert.alert('Próximamente', 'Esta función estará disponible pronto'),
+      onPress: () => navigation.navigate('Theme'),
     },
     {
       id: 'notifications',
@@ -54,7 +55,7 @@ export default function SettingsScreen({ navigation }: any) {
       title: 'Notificaciones',
       subtitle: 'Configura tus alertas',
       color: christmasTheme.colors.accent,
-      onPress: () => Alert.alert('Próximamente', 'Esta función estará disponible pronto'),
+      onPress: () => navigation.navigate('Notifications'),
     },
     {
       id: 'privacy',
@@ -62,7 +63,7 @@ export default function SettingsScreen({ navigation }: any) {
       title: 'Privacidad',
       subtitle: 'Gestiona tu privacidad',
       color: christmasTheme.colors.secondary,
-      onPress: () => Alert.alert('Próximamente', 'Esta función estará disponible pronto'),
+      onPress: () => navigation.navigate('Privacy'),
     },
     {
       id: 'help',
@@ -70,7 +71,7 @@ export default function SettingsScreen({ navigation }: any) {
       title: 'Ayuda',
       subtitle: 'Centro de ayuda',
       color: '#0066FF',
-      onPress: () => Alert.alert('Ayuda', 'Para soporte, contacta a soporte@duolove.com'),
+      onPress: () => navigation.navigate('Help'),
     },
     {
       id: 'about',
@@ -78,7 +79,7 @@ export default function SettingsScreen({ navigation }: any) {
       title: 'Acerca de',
       subtitle: 'Versión 1.0.0',
       color: christmasTheme.colors.textMuted,
-      onPress: () => Alert.alert('DuoLove', 'Versión 1.0.0\nEdición Navideña 🎄\n© 2025'),
+      onPress: () => Alert.alert('DuoLove', 'Versión 1.0.0\nEdición Navideña\n© 2025'),
     },
   ];
 
@@ -96,7 +97,22 @@ export default function SettingsScreen({ navigation }: any) {
           >
             <Ionicons name="arrow-back" size={24} color={christmasTheme.colors.text} />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>⚙️ Ajustes</Text>
+          <View style={styles.headerTitleContainer}>
+            <Svg width={28} height={28} viewBox="0 0 100 100">
+              {/* Gear icon */}
+              <Circle cx="50" cy="50" r="20" fill={christmasTheme.colors.text} />
+              <Circle cx="50" cy="50" r="12" fill={christmasTheme.colors.primary} />
+              <Rect x="46" y="15" width="8" height="20" fill={christmasTheme.colors.text} />
+              <Rect x="46" y="65" width="8" height="20" fill={christmasTheme.colors.text} />
+              <Rect x="15" y="46" width="20" height="8" fill={christmasTheme.colors.text} />
+              <Rect x="65" y="46" width="20" height="8" fill={christmasTheme.colors.text} />
+              <Rect x="25" y="25" width="8" height="15" fill={christmasTheme.colors.text} transform="rotate(45 29 32)" />
+              <Rect x="67" y="25" width="8" height="15" fill={christmasTheme.colors.text} transform="rotate(-45 71 32)" />
+              <Rect x="25" y="60" width="8" height="15" fill={christmasTheme.colors.text} transform="rotate(-45 29 68)" />
+              <Rect x="67" y="60" width="8" height="15" fill={christmasTheme.colors.text} transform="rotate(45 71 68)" />
+            </Svg>
+            <Text style={styles.headerTitle}>Ajustes</Text>
+          </View>
         </View>
 
         {/* Settings Options */}
@@ -133,7 +149,23 @@ export default function SettingsScreen({ navigation }: any) {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>🎄 DuoLove - Edición Navideña 2025 🎄</Text>
+          <Svg width={24} height={24} viewBox="0 0 100 100" style={{ marginRight: 8 }}>
+            <Path
+              d="M50 10 L70 35 L65 35 L80 55 L75 55 L90 75 L10 75 L25 55 L20 55 L35 35 L30 35 Z"
+              fill="#165B33"
+            />
+            <Rect x="45" y="75" width="10" height="15" fill="#8B4513" />
+            <Circle cx="50" cy="12" r="4" fill="#FFD700" />
+          </Svg>
+          <Text style={styles.footerText}>DuoLove - Edición Navideña 2025</Text>
+          <Svg width={24} height={24} viewBox="0 0 100 100" style={{ marginLeft: 8 }}>
+            <Path
+              d="M50 10 L70 35 L65 35 L80 55 L75 55 L90 75 L10 75 L25 55 L20 55 L35 35 L30 35 Z"
+              fill="#165B33"
+            />
+            <Rect x="45" y="75" width="10" height="15" fill="#8B4513" />
+            <Circle cx="50" cy="12" r="4" fill="#FFD700" />
+          </Svg>
         </View>
       </ScrollView>
     </LinearGradient>
@@ -157,6 +189,11 @@ const styles = StyleSheet.create({
   backButton: {
     padding: christmasTheme.spacing.sm,
     marginRight: christmasTheme.spacing.sm,
+  },
+  headerTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: christmasTheme.spacing.sm,
   },
   headerTitle: {
     fontSize: christmasTheme.fontSizes.xxlarge,
@@ -216,6 +253,8 @@ const styles = StyleSheet.create({
   footer: {
     padding: christmasTheme.spacing.lg,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   footerText: {
     fontSize: christmasTheme.fontSizes.small,

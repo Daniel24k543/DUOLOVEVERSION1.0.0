@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import Svg, { Path, Circle, Polygon } from 'react-native-svg';
 import ApiService from '../services/api';
 import { christmasTheme } from '../theme';
 
@@ -74,7 +75,16 @@ export default function RegisterScreen({ navigation }: any) {
             >
               <Ionicons name="arrow-back" size={24} color={christmasTheme.colors.text} />
             </TouchableOpacity>
-            <Text style={styles.emoji}>🎁</Text>
+            <View style={styles.iconContainer}>
+              <Svg width="80" height="80" viewBox="0 0 24 24">
+                {/* Regalo SVG */}
+                <Path d="M4 10 L20 10 L20 20 L4 20 Z" fill="#C41E3A"/>
+                <Path d="M12 10 L12 20" stroke="#FFD700" strokeWidth="1.5"/>
+                <Path d="M4 10 L20 10" stroke="#FFD700" strokeWidth="1.5"/>
+                <Path d="M6 6 L18 6 L18 10 L6 10 Z" fill="#FFD700"/>
+                <Path d="M8 2 Q12 6 12 6 Q12 6 16 2" stroke="#C41E3A" strokeWidth="1.5" fill="none"/>
+              </Svg>
+            </View>
             <Text style={styles.title}>Crear Cuenta</Text>
             <Text style={styles.subtitle}>Únete a DuoLove</Text>
           </View>
@@ -165,7 +175,27 @@ export default function RegisterScreen({ navigation }: any) {
 
           {/* Footer */}
           <View style={styles.footer}>
-            <Text style={styles.footerEmoji}>❄️ ⛄ 🎁</Text>
+            <View style={styles.footerIcons}>
+              {/* Copo de nieve */}
+              <Svg width="30" height="30" viewBox="0 0 24 24">
+                <Path d="M12 2L12 22M2 12L22 12M6 6L18 18M6 18L18 6" stroke="#FFFFFF" strokeWidth="1.5" fill="none"/>
+                <Circle cx="12" cy="12" r="1.5" fill="#FFFFFF"/>
+              </Svg>
+              {/* Muñeco de nieve */}
+              <Svg width="30" height="30" viewBox="0 0 24 24">
+                <Circle cx="12" cy="8" r="3" fill="#FFFFFF"/>
+                <Circle cx="12" cy="16" r="4" fill="#FFFFFF"/>
+                <Circle cx="11" cy="7" r="0.5" fill="#000"/>
+                <Circle cx="13" cy="7" r="0.5" fill="#000"/>
+              </Svg>
+              {/* Regalo */}
+              <Svg width="30" height="30" viewBox="0 0 24 24">
+                <Path d="M4 10 L20 10 L20 20 L4 20 Z" fill="#C41E3A"/>
+                <Path d="M12 10 L12 20" stroke="#FFD700" strokeWidth="2"/>
+                <Path d="M4 10 L20 10" stroke="#FFD700" strokeWidth="2"/>
+                <Path d="M6 6 L18 6 L18 10 L6 10 Z" fill="#FFD700"/>
+              </Svg>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -194,6 +224,9 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     padding: christmasTheme.spacing.sm,
+  },
+  iconContainer: {
+    marginBottom: christmasTheme.spacing.md,
   },
   emoji: {
     fontSize: 60,
@@ -263,6 +296,11 @@ const styles = StyleSheet.create({
   footer: {
     marginTop: christmasTheme.spacing.xl,
     alignItems: 'center',
+  },
+  footerIcons: {
+    flexDirection: 'row',
+    gap: christmasTheme.spacing.md,
+    justifyContent: 'center',
   },
   footerEmoji: {
     fontSize: 24,

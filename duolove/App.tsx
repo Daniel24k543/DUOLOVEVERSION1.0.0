@@ -10,6 +10,11 @@ import * as Font from 'expo-font';
 import ApiService from './src/services/api';
 import { christmasTheme } from './src/theme';
 
+// Context Providers
+import { ThemeProvider } from './src/context/ThemeContext';
+import { NotificationProvider } from './src/context/NotificationContext';
+import { PrivacyProvider } from './src/context/PrivacyContext';
+
 // Screens
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
@@ -20,6 +25,10 @@ import CreateRoomScreen from './src/screens/CreateRoomScreen';
 import JoinRoomScreen from './src/screens/JoinRoomScreen';
 import RoomScreen from './src/screens/RoomScreen';
 import QRScannerScreen from './src/screens/QRScannerScreen';
+import ThemeScreen from './src/screens/ThemeScreen';
+import NotificationsScreen from './src/screens/NotificationsScreen';
+import PrivacyScreen from './src/screens/PrivacyScreen';
+import HelpScreen from './src/screens/HelpScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -113,17 +122,11 @@ export default function App() {
   if (!fontsLoaded || loading) {
     return (
       <View style={styles.splashContainer}>
-        <LinearGradient
-          colors={['#2D1B69', '#5B2C83', '#2D1B69']}
-          style={styles.splashBackground}
-        >
-          <View style={styles.splashContent}>
-            <Text style={styles.splashEmoji}>🎄</Text>
-            <Text style={styles.splashTitle}>DuoLove</Text>
-            <Text style={styles.splashSubtitle}>💕 Edición Navideña 💕</Text>
-            <Text style={styles.splashEmoji}>🎅</Text>
-          </View>
-        </LinearGradient>
+        <Image
+          source={require('./assets/splash-duolove.jpg')}
+          style={styles.splashImage}
+          resizeMode="cover"
+        />
         <StatusBar style="light" />
       </View>
     );
@@ -131,28 +134,40 @@ export default function App() {
 
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator 
-          initialRouteName={isAuthenticated ? "Main" : "Login"}
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {/* Pantallas de autenticación */}
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          
-          {/* Pantallas principales con tabs */}
-          <Stack.Screen name="Main" component={MainTabs} />
-          
-          {/* Pantallas adicionales */}
-          <Stack.Screen name="Settings" component={SettingsScreen} />
-          <Stack.Screen name="CreateRoom" component={CreateRoomScreen} />
-          <Stack.Screen name="JoinRoom" component={JoinRoomScreen} />
-          <Stack.Screen name="Room" component={RoomScreen} />
-          <Stack.Screen name="QRScanner" component={QRScannerScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ThemeProvider>
+        <NotificationProvider>
+          <PrivacyProvider>
+            <NavigationContainer>
+              <Stack.Navigator 
+                initialRouteName={isAuthenticated ? "Main" : "Login"}
+                screenOptions={{
+                  headerShown: false,
+                }}
+              >
+                {/* Pantallas de autenticación */}
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Register" component={RegisterScreen} />
+                
+                {/* Pantallas principales con tabs */}
+                <Stack.Screen name="Main" component={MainTabs} />
+                
+                {/* Pantallas adicionales */}
+                <Stack.Screen name="Settings" component={SettingsScreen} />
+                <Stack.Screen name="CreateRoom" component={CreateRoomScreen} />
+                <Stack.Screen name="JoinRoom" component={JoinRoomScreen} />
+                <Stack.Screen name="Room" component={RoomScreen} />
+                <Stack.Screen name="QRScanner" component={QRScannerScreen} />
+                
+                {/* Pantallas de configuración */}
+                <Stack.Screen name="Theme" component={ThemeScreen} />
+                <Stack.Screen name="Notifications" component={NotificationsScreen} />
+                <Stack.Screen name="Privacy" component={PrivacyScreen} />
+                <Stack.Screen name="Help" component={HelpScreen} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </PrivacyProvider>
+        </NotificationProvider>
+      </ThemeProvider>
       <StatusBar style="light" />
     </>
   );

@@ -554,8 +554,9 @@ app.get('/drawings/:room_id', authMiddleware, async (req, res) => {
 
 // ==================== INICIAR SERVIDOR ====================
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🎄✨ DuoLove Backend corriendo en http://localhost:${PORT} ✨🎄\n`);
+  console.log(`📱 Desde tu teléfono usa: http://192.168.1.3:${PORT}\n`);
 });
 
 // Manejo de errores no capturados

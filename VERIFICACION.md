@@ -13,20 +13,23 @@ npm run dev
 ```
 
 **Resultado esperado**:
+
 ```
 🎄✨ DuoLove Backend corriendo en http://localhost:4000 ✨🎄
 ✅ Base de datos inicializada correctamente
 ```
 
 **Probar API**:
+
 ```powershell
 # En otra terminal (PowerShell):
 curl http://localhost:4000
 ```
 
 Deberías ver:
+
 ```json
-{"message":"🎄 DuoLove Backend API","version":"1.0.0","status":"running"}
+{ "message": "🎄 DuoLove Backend API", "version": "1.0.0", "status": "running" }
 ```
 
 ---
@@ -40,6 +43,7 @@ npm start
 ```
 
 **Resultado esperado**:
+
 - Se abre una página web en http://localhost:8081
 - Ves un QR code
 - Opciones para presionar `a` (Android), `w` (Web), etc.
@@ -51,6 +55,7 @@ npm start
 En la terminal de Expo, presiona **`w`**
 
 **Resultado esperado**:
+
 - Se abre http://localhost:8081 en navegador
 - Ves splash navideño 4.5 segundos
 - Aparece pantalla de Login
@@ -60,6 +65,7 @@ En la terminal de Expo, presiona **`w`**
 ### 4. Probar Flujo Completo
 
 #### A. Registro
+
 1. Click en "Regístrate"
 2. Ingresa:
    - Nombre: `Usuario 1`
@@ -71,6 +77,7 @@ En la terminal de Expo, presiona **`w`**
 **✅ Éxito**: Entras a pantalla Home
 
 #### B. Crear Sala
+
 1. En Home, click "Crear Sala"
 2. Ingresa nombre: `Sala de Prueba`
 3. Click "Crear Sala"
@@ -81,12 +88,15 @@ En la terminal de Expo, presiona **`w`**
 5. Click "Ir a mis salas"
 
 #### C. Ver Sala en Lista
+
 **✅ Éxito**: Ves "Sala de Prueba" en la lista de salas
 
 #### D. Abrir Pizarra
+
 1. Click en "Sala de Prueba"
 
-**✅ Éxito**: 
+**✅ Éxito**:
+
 - Ves pizarra blanca grande
 - Selector de colores arriba
 - Selector de grosor
@@ -100,6 +110,7 @@ En la terminal de Expo, presiona **`w`**
 **✅ Éxito**: Todo funciona
 
 #### E. Perfil
+
 1. Ve al tab "Perfil" (abajo)
 
 **✅ Éxito**: Ves tu nombre, email, botón de foto
@@ -110,6 +121,7 @@ En la terminal de Expo, presiona **`w`**
 **✅ Éxito**: Ves opciones de ajustes
 
 #### F. Segundo Usuario (Unirse a Sala)
+
 1. Click "Cerrar sesión"
 2. Registra otro usuario: `user2@duolove.com`
 3. En Home, click "Unir Sala"
@@ -134,11 +146,13 @@ Test-Path duolove.db
 ```
 
 Para inspeccionar contenido (requiere sqlite3):
+
 ```powershell
 sqlite3 duolove.db
 ```
 
 Dentro de sqlite:
+
 ```sql
 .tables
 -- Deberías ver: drawings  room_members  rooms  users
@@ -160,10 +174,12 @@ SELECT code, name FROM rooms;
 ## 🌐 Probar en Android Emulator
 
 ### Requisitos:
+
 - Android Studio instalado
 - AVD (emulador) creado
 
 ### Pasos:
+
 1. Abre Android Studio
 2. Tools → Device Manager
 3. Play en un dispositivo virtual
@@ -172,8 +188,9 @@ SELECT code, name FROM rooms;
 **✅ Éxito**: La app se instala y abre en el emulador
 
 **Nota**: Si el backend no conecta, el problema es la URL. En `duolove/src/config/api.ts` debe decir:
+
 ```typescript
-export const API_URL = 'http://10.0.2.2:4000'; // Para Android Emulator
+export const API_URL = "http://10.0.2.2:4000"; // Para Android Emulator
 ```
 
 ---
@@ -181,25 +198,30 @@ export const API_URL = 'http://10.0.2.2:4000'; // Para Android Emulator
 ## 📱 Probar en Teléfono Real
 
 ### Requisitos:
+
 - Expo Go instalado en tu teléfono
 - Estar en la misma red WiFi que tu PC
 
 ### Pasos:
 
 1. **Obtén la IP de tu PC**:
+
 ```powershell
 ipconfig
 ```
+
 Busca "IPv4 Address" (ej: `192.168.1.42`)
 
 2. **Actualiza la configuración**:
 
 Edita `duolove/src/config/api.ts`:
+
 ```typescript
-export const API_URL = 'http://192.168.1.42:4000'; // Tu IP
+export const API_URL = "http://192.168.1.42:4000"; // Tu IP
 ```
 
 3. **Reinicia Expo**:
+
 ```powershell
 # Ctrl+C para detener
 npm start
@@ -216,12 +238,14 @@ npm start
 ### Error: "Cannot connect to backend"
 
 **Diagnóstico**:
+
 ```powershell
 # ¿El backend está corriendo?
 curl http://localhost:4000
 ```
 
 Si no responde:
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\backend
 npm run dev
@@ -230,6 +254,7 @@ npm run dev
 ### Error: "Port 4000 is already in use"
 
 **Solución**:
+
 ```powershell
 # Encontrar proceso
 netstat -ano | findstr :4000
@@ -241,6 +266,7 @@ taskkill /PID 1234 /F
 ### Error: "Network request failed"
 
 **Soluciones**:
+
 1. Verifica que backend esté corriendo
 2. Si usas Android Emulator: URL debe ser `http://10.0.2.2:4000`
 3. Si usas teléfono: URL debe ser `http://TU_IP:4000`
@@ -249,6 +275,7 @@ taskkill /PID 1234 /F
 ### Error: "Module not found"
 
 **Solución**:
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\duolove
 Remove-Item -Recurse -Force node_modules
@@ -267,11 +294,13 @@ npm install
 ## 📊 Endpoints API Disponibles
 
 ### Públicos (sin token)
+
 - `GET /` - Health check
 - `POST /register` - Registro
 - `POST /login` - Login
 
 ### Privados (requieren token)
+
 - `GET /profile` - Obtener perfil
 - `POST /profile` - Actualizar perfil
 - `POST /profile/upload-avatar` - Subir foto
@@ -288,6 +317,7 @@ npm install
 ## 🎯 Test Cases
 
 ### Caso 1: Registro con validación
+
 ```
 Input: Email inválido "test"
 Expected: Error "Email no válido"
@@ -300,6 +330,7 @@ Expected: Error "Este email ya está registrado"
 ```
 
 ### Caso 2: Login
+
 ```
 Input: Email no existe
 Expected: Error "Usuario no encontrado"
@@ -312,6 +343,7 @@ Expected: Navegación a Home
 ```
 
 ### Caso 3: Crear Sala
+
 ```
 Input: Nombre vacío
 Expected: Error "Por favor ingresa un nombre para la sala"
@@ -321,6 +353,7 @@ Expected: Código de 8 caracteres generado + QR
 ```
 
 ### Caso 4: Unir Sala
+
 ```
 Input: Código no existe
 Expected: Error "Sala no encontrada"
@@ -358,6 +391,7 @@ Expected: "Ya eres miembro de esta sala"
 ¡Felicitaciones! Tu app DuoLove está **100% operativa**.
 
 Ahora puedes:
+
 1. Agregar assets bonitos
 2. Invitar a tu pareja a probar
 3. Personalizar colores/tema

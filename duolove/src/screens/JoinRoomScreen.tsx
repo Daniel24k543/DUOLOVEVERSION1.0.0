@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import ApiService from '../services/api';
 import { christmasTheme } from '../theme';
 
@@ -58,7 +59,22 @@ export default function JoinRoomScreen({ navigation }: any) {
           >
             <Ionicons name="arrow-back" size={24} color={christmasTheme.colors.text} />
           </TouchableOpacity>
-          <Text style={styles.emoji}>🔑</Text>
+          {/* SVG Key Icon */}
+          <Svg width={70} height={70} viewBox="0 0 100 100">
+            {/* Key design */}
+            <Circle cx="30" cy="30" r="20" fill="none" stroke="#FFD700" strokeWidth="5" />
+            <Circle cx="30" cy="30" r="10" fill="none" stroke="#FFD700" strokeWidth="5" />
+            <Rect x="40" y="27" width="45" height="6" fill="#FFD700" />
+            <Rect x="70" y="20" width="6" height="13" fill="#FFD700" />
+            <Rect x="80" y="20" width="6" height="13" fill="#FFD700" />
+            {/* Shine effect */}
+            <Path
+              d="M25 20 Q20 25 25 30"
+              stroke="#FFF8DC"
+              strokeWidth="2"
+              fill="none"
+            />
+          </Svg>
           <Text style={styles.title}>Unirse a Sala</Text>
           <Text style={styles.subtitle}>Ingresa el código que te compartió tu pareja</Text>
         </View>
@@ -122,15 +138,12 @@ const styles = StyleSheet.create({
     top: 0,
     padding: christmasTheme.spacing.sm,
   },
-  emoji: {
-    fontSize: 60,
-    marginBottom: christmasTheme.spacing.sm,
-  },
   title: {
     fontSize: christmasTheme.fontSizes.xxlarge,
     fontWeight: 'bold',
     color: christmasTheme.colors.text,
     marginBottom: christmasTheme.spacing.xs,
+    marginTop: christmasTheme.spacing.sm,
   },
   subtitle: {
     fontSize: christmasTheme.fontSizes.medium,

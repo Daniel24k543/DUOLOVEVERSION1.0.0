@@ -5,12 +5,14 @@
 ### Ubicación: RoomScreen (Pantalla de la pizarra)
 
 ### Funcionalidad:
+
 - **Botón "+ Pizarra"** (azul): Permite seleccionar una imagen de tu galería para usarla como fondo de la pizarra
 - **Botón "Quitar"** (naranja): Aparece cuando hay una imagen de fondo, permite quitarla
 - La imagen se muestra con **opacidad del 30%** para que puedas dibujar encima sin perder visibilidad
 - Los dibujos se mantienen **por encima** de la imagen de fondo
 
 ### Cómo Usar:
+
 1. Entra a una sala (toca una sala de tu lista)
 2. Toca el botón **"+ Pizarra"** (icono de imagen)
 3. Selecciona una foto de tu galería
@@ -24,12 +26,14 @@
 ### Ubicación: Settings → "Escanear código QR"
 
 ### Funcionalidad:
+
 - **Nueva pantalla de escaneo** con cámara en tiempo real
 - **Marco dorado** con esquinas para guiar el escaneo
 - Detecta automáticamente códigos QR de salas
 - Te une a la sala instantáneamente después de escanear
 
 ### Cómo Usar:
+
 1. Ve a **Perfil** → **Ajustes** (⚙️)
 2. Toca **"Escanear código QR"** (primera opción, icono morado)
 3. Apunta la cámara al código QR de la sala
@@ -62,12 +66,14 @@ Si no quieres instalar ahora, la app funcionará **sin problemas** excepto por l
 ## 🎨 Diseño
 
 ### Botones en Pizarra:
+
 - **🖼️ + Pizarra** (Azul #0066FF): Subir imagen de fondo
 - **❌ Quitar** (Naranja #FF6B35): Quitar imagen de fondo
 - **↩️ Deshacer** (Gris): Deshacer último trazo
 - **🗑️ Limpiar** (Rojo): Limpiar toda la pizarra
 
 ### Pantalla de Escaneo QR:
+
 - Fondo negro con cámara en tiempo real
 - Marco de escaneo dorado con esquinas
 - Instrucciones en la parte inferior
@@ -78,6 +84,7 @@ Si no quieres instalar ahora, la app funcionará **sin problemas** excepto por l
 ## 🧪 Prueba las Funcionalidades
 
 ### Probar Fondo de Pizarra:
+
 1. Crea una sala
 2. Entra a la sala
 3. Toca "+ Pizarra"
@@ -85,6 +92,7 @@ Si no quieres instalar ahora, la app funcionará **sin problemas** excepto por l
 5. Dibuja encima
 
 ### Probar Escaneo QR:
+
 1. Crea una sala en un dispositivo
 2. Muestra el código QR
 3. En otro dispositivo: Settings → Escanear código QR
@@ -95,10 +103,12 @@ Si no quieres instalar ahora, la app funcionará **sin problemas** excepto por l
 ## 📝 Notas Técnicas
 
 ### Permisos Requeridos:
+
 - **Galería de fotos**: Para subir imagen de fondo (se solicita automáticamente)
 - **Cámara**: Para escanear QR (se solicita automáticamente)
 
 ### Compatibilidad:
+
 - ✅ Android físico
 - ✅ Android emulador (solo fondo, QR requiere cámara física)
 - ✅ iOS (no probado pero debería funcionar)
@@ -109,6 +119,7 @@ Si no quieres instalar ahora, la app funcionará **sin problemas** excepto por l
 ## 🎄 ¡Listo!
 
 Ahora tu app **DuoLove** tiene:
+
 1. ✅ Splash navideño de 5 segundos
 2. ✅ Login/Registro funcional
 3. ✅ Crear y unirse a salas con código

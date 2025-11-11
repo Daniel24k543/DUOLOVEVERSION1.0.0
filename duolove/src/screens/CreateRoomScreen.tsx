@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import QRCode from 'react-native-qrcode-svg';
 import ApiService from '../services/api';
 import { christmasTheme } from '../theme';
@@ -63,7 +64,42 @@ export default function CreateRoomScreen({ navigation }: any) {
       >
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.successHeader}>
-            <Text style={styles.successEmoji}>🎉</Text>
+            {/* SVG Celebration Icon */}
+            <Svg width={80} height={80} viewBox="0 0 100 100">
+              {/* Confetti pieces */}
+              <Rect x="15" y="10" width="8" height="8" fill="#FFD700" />
+              <Circle cx="75" cy="15" r="4" fill="#C41E3A" />
+              <Rect x="85" y="25" width="6" height="10" fill="#165B33" transform="rotate(45 88 30)" />
+              <Circle cx="20" cy="30" r="3" fill="#FF6B9D" />
+              <Rect x="70" y="35" width="8" height="8" fill="#4A90E2" />
+              {/* Star shapes */}
+              <Path
+                d="M50 20 L53 28 L62 28 L55 34 L58 42 L50 37 L42 42 L45 34 L38 28 L47 28 Z"
+                fill="#FFD700"
+              />
+              {/* Streamers */}
+              <Path
+                d="M30 45 Q35 50 30 55 Q25 60 30 65"
+                stroke="#C41E3A"
+                strokeWidth="3"
+                fill="none"
+              />
+              <Path
+                d="M70 45 Q65 50 70 55 Q75 60 70 65"
+                stroke="#165B33"
+                strokeWidth="3"
+                fill="none"
+              />
+              {/* Party popper */}
+              <Path
+                d="M45 70 L50 85 L55 70 Z"
+                fill="#FFD700"
+              />
+              <Rect x="48" y="60" width="4" height="15" fill="#8B4513" />
+              {/* More confetti */}
+              <Circle cx="35" cy="75" r="3" fill="#4A90E2" />
+              <Rect x="60" y="70" width="6" height="6" fill="#FF6B9D" />
+            </Svg>
             <Text style={styles.successTitle}>¡Sala Creada!</Text>
             <Text style={styles.successSubtitle}>
               Comparte este código con tu pareja
@@ -87,11 +123,38 @@ export default function CreateRoomScreen({ navigation }: any) {
             <View style={styles.codeContainer}>
               <Text style={styles.codeLabel}>Código de sala:</Text>
               <Text style={styles.code}>{roomData.code}</Text>
+              <TouchableOpacity
+                style={styles.copyCodeButton}
+                onPress={async () => {
+                  try {
+                    await Share.share({
+                      message: roomData.code,
+                    });
+                    Alert.alert('Éxito', 'Código copiado');
+                  } catch (error) {
+                    Alert.alert('Error', 'No se pudo copiar el código');
+                  }
+                }}
+              >
+                <Ionicons name="copy-outline" size={18} color={christmasTheme.colors.primary} />
+                <Text style={styles.copyCodeText}>Copiar</Text>
+              </TouchableOpacity>
             </View>
 
             <TouchableOpacity style={styles.shareButton} onPress={handleShareCode}>
               <Ionicons name="share-social" size={20} color="#fff" />
               <Text style={styles.shareButtonText}>Compartir código</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.viewQRButton} onPress={() => {
+              Alert.alert(
+                'Código QR',
+                'Tu pareja puede escanear este código QR para unirse a la sala',
+                [{ text: 'Entendido' }]
+              );
+            }}>
+              <Ionicons name="qr-code-outline" size={20} color={christmasTheme.colors.primary} />
+              <Text style={styles.viewQRButtonText}>Ver información del QR</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.doneButton} onPress={handleGoToRoom}>
@@ -116,7 +179,37 @@ export default function CreateRoomScreen({ navigation }: any) {
           >
             <Ionicons name="arrow-back" size={24} color={christmasTheme.colors.text} />
           </TouchableOpacity>
-          <Text style={styles.emoji}>🏠</Text>
+          {/* SVG House Icon */}
+          <Svg width={70} height={70} viewBox="0 0 100 100">
+            {/* Roof */}
+            <Path
+              d="M50 20 L85 50 L80 50 L80 85 L20 85 L20 50 L15 50 Z"
+              fill="#C41E3A"
+              stroke="#8B0000"
+              strokeWidth="2"
+            />
+            {/* House body */}
+            <Rect x="25" y="50" width="50" height="35" fill="#FFE4B5" stroke="#D2691E" strokeWidth="2" />
+            {/* Door */}
+            <Rect x="42" y="60" width="16" height="25" fill="#8B4513" stroke="#654321" strokeWidth="1.5" />
+            <Circle cx="52" cy="72" r="1.5" fill="#FFD700" />
+            {/* Windows */}
+            <Rect x="30" y="55" width="10" height="10" fill="#87CEEB" stroke="#4682B4" strokeWidth="1.5" />
+            <Path d="M35 55 L35 65 M30 60 L40 60" stroke="#4682B4" strokeWidth="1" />
+            <Rect x="60" y="55" width="10" height="10" fill="#87CEEB" stroke="#4682B4" strokeWidth="1.5" />
+            <Path d="M65 55 L65 65 M60 60 L70 60" stroke="#4682B4" strokeWidth="1" />
+            {/* Chimney */}
+            <Rect x="65" y="30" width="8" height="20" fill="#8B4513" stroke="#654321" strokeWidth="1.5" />
+            {/* Roof decoration */}
+            <Circle cx="50" cy="25" r="3" fill="#FFD700" />
+            {/* Snow on roof */}
+            <Path
+              d="M20 50 Q30 52 40 50 Q50 48 60 50 Q70 52 80 50"
+              fill="none"
+              stroke="#FFFFFF"
+              strokeWidth="3"
+            />
+          </Svg>
           <Text style={styles.title}>Crear Sala</Text>
           <Text style={styles.subtitle}>Crea un espacio para compartir con tu pareja</Text>
         </View>
@@ -171,15 +264,12 @@ const styles = StyleSheet.create({
     top: 0,
     padding: christmasTheme.spacing.sm,
   },
-  emoji: {
-    fontSize: 60,
-    marginBottom: christmasTheme.spacing.sm,
-  },
   title: {
     fontSize: christmasTheme.fontSizes.xxlarge,
     fontWeight: 'bold',
     color: christmasTheme.colors.text,
     marginBottom: christmasTheme.spacing.xs,
+    marginTop: christmasTheme.spacing.sm,
   },
   subtitle: {
     fontSize: christmasTheme.fontSizes.medium,
@@ -230,15 +320,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: christmasTheme.spacing.xl,
   },
-  successEmoji: {
-    fontSize: 60,
-    marginBottom: christmasTheme.spacing.sm,
-  },
   successTitle: {
     fontSize: christmasTheme.fontSizes.xxlarge,
     fontWeight: 'bold',
     color: christmasTheme.colors.text,
     marginBottom: christmasTheme.spacing.xs,
+    marginTop: christmasTheme.spacing.sm,
   },
   successSubtitle: {
     fontSize: christmasTheme.fontSizes.medium,
@@ -278,6 +365,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: christmasTheme.colors.primary,
     letterSpacing: 2,
+    marginBottom: christmasTheme.spacing.sm,
+  },
+  copyCodeButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: christmasTheme.borderRadius.small,
+    borderWidth: 1,
+    borderColor: christmasTheme.colors.primary,
+    backgroundColor: christmasTheme.colors.backgroundLight,
+  },
+  copyCodeText: {
+    fontSize: christmasTheme.fontSizes.small,
+    color: christmasTheme.colors.primary,
+    fontWeight: '600',
   },
   shareButton: {
     flexDirection: 'row',
@@ -294,6 +398,23 @@ const styles = StyleSheet.create({
     color: christmasTheme.colors.text,
     fontSize: christmasTheme.fontSizes.medium,
     fontWeight: 'bold',
+  },
+  viewQRButton: {
+    flexDirection: 'row',
+    backgroundColor: christmasTheme.colors.backgroundLight,
+    borderRadius: christmasTheme.borderRadius.medium,
+    paddingVertical: christmasTheme.spacing.md,
+    paddingHorizontal: christmasTheme.spacing.xl,
+    alignItems: 'center',
+    gap: christmasTheme.spacing.sm,
+    marginBottom: christmasTheme.spacing.md,
+    borderWidth: 1,
+    borderColor: christmasTheme.colors.border,
+  },
+  viewQRButtonText: {
+    color: christmasTheme.colors.primary,
+    fontSize: christmasTheme.fontSizes.medium,
+    fontWeight: '600',
   },
   doneButton: {
     paddingVertical: christmasTheme.spacing.sm,

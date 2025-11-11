@@ -5,6 +5,7 @@ Una aplicación imprescindible para parejas con tema navideño, pizarra comparti
 ## 🚀 Inicio Rápido
 
 ### Pre-requisitos
+
 - Node.js 16+ ([Descargar aquí](https://nodejs.org/))
 - Git (opcional)
 - Para Android: Android Studio + Emulador o Expo Go en tu teléfono
@@ -12,6 +13,7 @@ Una aplicación imprescindible para parejas con tema navideño, pizarra comparti
 ### 📦 Instalación
 
 #### 1. Backend (Node + Express + SQLite)
+
 ```powershell
 cd backend
 npm install
@@ -21,6 +23,7 @@ npm run dev
 El backend estará corriendo en `http://localhost:4000`
 
 #### 2. Frontend (Expo - React Native)
+
 ```powershell
 cd duolove
 npm install
@@ -62,16 +65,20 @@ npm start
 ## 🔧 Configuración
 
 ### Backend (.env)
+
 Crea un archivo `backend/.env`:
+
 ```
 JWT_SECRET=tu_clave_secreta_cambiala_por_una_real
 PORT=4000
 ```
 
 ### Frontend (IP del servidor)
+
 Si usas un dispositivo físico, cambia la IP en `duolove/src/config/api.ts` a la IP de tu computadora:
+
 ```typescript
-export const API_URL = 'http://TU_IP_LOCAL:4000';
+export const API_URL = "http://TU_IP_LOCAL:4000";
 ```
 
 ## 📝 Estructura del Proyecto

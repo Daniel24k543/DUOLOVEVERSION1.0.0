@@ -49,16 +49,19 @@ Esto instalará: express, sqlite3, bcryptjs, jsonwebtoken, cors, dotenv, multer,
 ### 1.4 Iniciar el backend
 
 **Opción A - Modo desarrollo (con auto-reinicio):**
+
 ```powershell
 npm run dev
 ```
 
 **Opción B - Modo producción:**
+
 ```powershell
 npm start
 ```
 
 ✅ **Resultado esperado**: Verás en consola:
+
 ```
 🎄✨ DuoLove Backend corriendo en http://localhost:4000 ✨🎄
 ✅ Base de datos inicializada correctamente
@@ -95,9 +98,11 @@ Esto puede tardar 2-5 minutos. Instalará React Native, Expo, navegación, etc.
 **Si vas a usar tu teléfono real**, necesitas cambiar la IP:
 
 1. Obtén la IP de tu computadora:
+
 ```powershell
 ipconfig
 ```
+
 Busca "IPv4 Address" de tu adaptador de red (ej: `192.168.1.42`)
 
 2. Edita `duolove\src\config\api.ts`:
@@ -161,6 +166,7 @@ En la terminal de Expo, presiona **`w`** para abrir en navegador web.
 ### 4.3 Unirse a una sala (segundo usuario)
 
 **Opción 1 - Mismo dispositivo:**
+
 1. Cierra sesión (Perfil → Cerrar sesión)
 2. Registra otro usuario: `test2@duolove.com`
 3. En Home, haz clic en **"Unir Sala"**
@@ -168,6 +174,7 @@ En la terminal de Expo, presiona **`w`** para abrir en navegador web.
 5. Haz clic en **"Unirse a la Sala"**
 
 **Opción 2 - Otro dispositivo:**
+
 1. Instala la app en otro dispositivo
 2. Registra otro usuario
 3. Escanea el QR O ingresa el código manualmente
@@ -184,6 +191,7 @@ En la terminal de Expo, presiona **`w`** para abrir en navegador web.
 ## 🔧 PARTE 5: Comandos Útiles
 
 ### Reiniciar backend
+
 ```powershell
 # Detén con Ctrl+C, luego:
 cd C:\Users\magis\Documents\DuoLove\backend
@@ -191,6 +199,7 @@ npm run dev
 ```
 
 ### Reiniciar frontend
+
 ```powershell
 # Detén con Ctrl+C, luego:
 cd C:\Users\magis\Documents\DuoLove\duolove
@@ -198,15 +207,18 @@ npm start
 ```
 
 ### Limpiar cache de Expo
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\duolove
 npx expo start -c
 ```
 
 ### Ver logs del backend
+
 Los logs aparecen en la terminal donde ejecutaste `npm run dev`
 
 ### Ver base de datos SQLite
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\backend
 # Instalar sqlite3 CLI (opcional)
@@ -225,10 +237,15 @@ sqlite3 duolove.db
 ### Problema: "Cannot connect to backend"
 
 **Solución:**
+
 1. Verifica que el backend esté corriendo (`http://localhost:4000`)
 2. Abre http://localhost:4000 en navegador, deberías ver:
    ```json
-   {"message":"🎄 DuoLove Backend API","version":"1.0.0","status":"running"}
+   {
+     "message": "🎄 DuoLove Backend API",
+     "version": "1.0.0",
+     "status": "running"
+   }
    ```
 3. Si usas Android Emulator, usa `http://10.0.2.2:4000`
 4. Si usas teléfono real, usa `http://TU_IP:4000`
@@ -236,6 +253,7 @@ sqlite3 duolove.db
 ### Problema: "Port 4000 already in use"
 
 **Solución:**
+
 ```powershell
 # Encontrar proceso en puerto 4000
 netstat -ano | findstr :4000
@@ -246,6 +264,7 @@ taskkill /PID <PID> /F
 ### Problema: Expo no inicia
 
 **Solución:**
+
 ```powershell
 # Limpiar cache
 cd C:\Users\magis\Documents\DuoLove\duolove
@@ -258,6 +277,7 @@ npx expo start -c
 ### Problema: "Module not found"
 
 **Solución:**
+
 ```powershell
 cd C:\Users\magis\Documents\DuoLove\duolove
 npm install
@@ -290,6 +310,7 @@ npx eas build --platform android --profile preview
 ### Deploy backend a producción
 
 Considera usar:
+
 - **Render.com** (gratis)
 - **Railway.app** (gratis)
 - **Heroku**
@@ -299,6 +320,7 @@ Considera usar:
 ## 📞 Soporte
 
 Si tienes problemas:
+
 1. Revisa los logs en ambas terminales (backend y frontend)
 2. Verifica que Node.js versión sea 16+
 3. Asegúrate de estar en la carpeta correcta
@@ -309,6 +331,7 @@ Si tienes problemas:
 ## ✨ ¡Listo!
 
 Tu app DuoLove está funcionando. Ahora puedes:
+
 - ✅ Crear usuarios
 - ✅ Crear salas con código/QR
 - ✅ Dibujar en la pizarra compartida

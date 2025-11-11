@@ -13,7 +13,8 @@ Write-Host "Verificando instalaciones..." -ForegroundColor Cyan
 $nodeVersion = node -v 2>$null
 if ($nodeVersion) {
     Write-Host "✅ Node.js instalado: $nodeVersion" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "❌ Node.js NO encontrado. Instálalo desde https://nodejs.org/" -ForegroundColor Red
     exit 1
 }
@@ -21,7 +22,8 @@ if ($nodeVersion) {
 $npmVersion = npm -v 2>$null
 if ($npmVersion) {
     Write-Host "✅ npm instalado: $npmVersion" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "❌ npm NO encontrado" -ForegroundColor Red
     exit 1
 }
@@ -43,7 +45,8 @@ if (-Not (Test-Path node_modules)) {
     Write-Host "Instalando paquetes del backend (esto puede tardar 1-2 minutos)..." -ForegroundColor Cyan
     npm install
     Write-Host "✅ Backend instalado" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "✅ Backend ya tiene dependencias instaladas" -ForegroundColor Green
 }
 
@@ -58,7 +61,8 @@ if (-Not (Test-Path node_modules)) {
     Write-Host "Instalando paquetes del frontend (esto puede tardar 3-5 minutos)..." -ForegroundColor Cyan
     npm install
     Write-Host "✅ Frontend instalado" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "✅ Frontend ya tiene dependencias instaladas" -ForegroundColor Green
 }
 
